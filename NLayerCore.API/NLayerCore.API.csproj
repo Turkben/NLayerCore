@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NLayerCore.Core\NLayerCore.Core.csproj" />
+    <ProjectReference Include="..\NLayerCore.Data\NLayerCore.Data.csproj" />
+    <ProjectReference Include="..\NLayerCore.Service\NLayerCore.Service.csproj" />
+  </ItemGroup>
+
 </Project>
