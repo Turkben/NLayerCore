@@ -9,6 +9,6 @@ namespace NLayerCore.Core.Repositories
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<Category> GetWithProductsByIdAsync(int id);
+        Task<Product> GetWithProductsByIdAsync(int productId);
     }
 }
