@@ -15,7 +15,7 @@ namespace NLayerCore.Data.Repositories
         {
             get { return _context as ApplicationDbContext; }
         }
-        public CategoryRepository(DbContext context) : base(context)
+        public CategoryRepository(ApplicationDbContext context) : base(context)
         {
         }
 

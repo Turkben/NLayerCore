@@ -20,9 +20,10 @@ namespace NLayerCore.Data.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
+            return entity;
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities)
@@ -30,9 +31,9 @@ namespace NLayerCore.Data.Repositories
             await _dbSet.AddRangeAsync(entities);
         }
 
-        public IEnumerable<TEntity> FindByWhere(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindByWhereAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.Where(predicate);
+            return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public async Task<TEntity> FindByWhereSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)

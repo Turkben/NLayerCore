@@ -20,7 +20,7 @@ namespace NLayerCore.Data.Repositories
         {
         }
 
-        public async Task<Product> GetWithProductsByIdAsync(int productId)
+        public async Task<Product> GetWithCategoryByIdAsync(int productId)
         {
             return await _appContext.Products.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == productId);
         }

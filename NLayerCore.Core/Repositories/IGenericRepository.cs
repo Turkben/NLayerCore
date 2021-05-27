@@ -11,10 +11,10 @@ namespace NLayerCore.Core.Repositories
     {
         Task<TEntity> GetByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        IEnumerable<TEntity> FindByWhere(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> FindByWhereAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> FindByWhereSingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         TEntity Update(TEntity entity);

@@ -9,6 +9,6 @@ namespace NLayerCore.Core.Services
 {
     public interface IProductService : IGenericService<Product>
     {
-        Task<Category> GetWithProductsByIdAsync(int id);
+        Task<Product> GetWithCategoryByIdAsync(int productId);
     }
 }

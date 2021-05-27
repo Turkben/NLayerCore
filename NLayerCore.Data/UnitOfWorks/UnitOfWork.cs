@@ -19,7 +19,7 @@ namespace NLayerCore.Data.UnitOfWorks
         {
             _context = context;
         }
-        public IProductRepository Produtcs => _productRepository = _productRepository ?? new ProductRepository(_context);
+        public IProductRepository Products => _productRepository = _productRepository ?? new ProductRepository(_context);
 
         public ICategoryRepository Categories => _categoryRepository = _categoryRepository ?? new CategoryRepository(_context);
 

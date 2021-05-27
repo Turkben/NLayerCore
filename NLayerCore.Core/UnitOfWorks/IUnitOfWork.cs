@@ -9,7 +9,7 @@ namespace NLayerCore.Core.UnitOfWorks
 {
     public interface IUnitOfWork
     {
-        IProductRepository Produtcs { get; }
+        IProductRepository Products { get; }
         ICategoryRepository Categories { get; }
         Task CommitAsync();
 
