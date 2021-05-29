@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NLayerCore.Service.Services
 {
-    class CategoryService : GenericService<Category>, ICategoryService
+    public class CategoryService : GenericService<Category>, ICategoryService
     {
         public CategoryService(IUnitOfWork unitOfWork, IGenericRepository<Category> repository) : base(unitOfWork, repository)
         {

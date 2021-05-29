@@ -18,6 +18,7 @@ namespace NLayerCore.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Person> Person { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,8 +28,14 @@ namespace NLayerCore.Data
             modelBuilder.ApplyConfiguration(new ProductSeed(new int[] { 1, 2 }));
             modelBuilder.ApplyConfiguration(new CategorySeed(new int[] { 1, 2 }));
 
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).UseIdentityColumn();
+                entity.Property(x => x.Name).HasMaxLength(100);
+                entity.Property(x => x.Surname).HasMaxLength(100);
+            });
 
-            //base.OnModelCreating(modelBuilder);
         }
     }
 }

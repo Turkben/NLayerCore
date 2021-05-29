@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NLayerCore.Data.Repositories
 {
-    class ProductRepository : GenericRepository<Product>, IProductRepository
+    public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         private ApplicationDbContext _appContext
         {
