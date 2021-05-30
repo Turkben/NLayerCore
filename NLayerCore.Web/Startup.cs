@@ -1,18 +1,11 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using NLayerCore.API.DTOs;
-using NLayerCore.API.Extensions;
-using NLayerCore.API.Filters;
+using NLayerCore.Web.Filters;
 using NLayerCore.Core.Repositories;
 using NLayerCore.Core.Services;
 using NLayerCore.Core.UnitOfWorks;
@@ -25,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NLayerCore.API
+namespace NLayerCore.Web
 {
     public class Startup
     {
@@ -39,31 +32,17 @@ namespace NLayerCore.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(GenericNotFoundFilterWeb<>));
             services.AddAutoMapper(typeof(Startup));
-            //services.AddScoped<ProductNotFoundFilter>();
-            services.AddScoped(typeof(GenericNotFoundFilter<>));
-
-
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("NLayerCore.Data")));
-            
-            services.AddControllers(x=> {
-                x.Filters.Add(new ValidationFilter());          
-            });
-
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                //default filter diasabled
-                options.SuppressModelStateInvalidFilter = true;
-            });
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("NLayerCore.Data")));
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,10 +52,14 @@ namespace NLayerCore.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCustomException();
-
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -84,7 +67,9 @@ namespace NLayerCore.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
