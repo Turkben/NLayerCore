@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NLayerCore.Web.DTOs;
-using NLayerCore.Core.Services;
+using NLayerCore.Web.ApiServices;
 
 namespace NLayerCore.Web.Filters
 {
-    public class GenericNotFoundFilterWeb<TEntity> : IAsyncActionFilter where TEntity : class
+    public class CategoryNotFoundFilterWeb
     {
-        private readonly IGenericService<TEntity> _service;
+        private readonly CategoryApiService _service;
 
-        public GenericNotFoundFilterWeb(IGenericService<TEntity> service)
+        public CategoryNotFoundFilterWeb(CategoryApiService service)
         {
             _service = service;
         }
